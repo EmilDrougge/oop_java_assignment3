@@ -1,9 +1,13 @@
+import Ljud.Ljudspelare;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Spel extends JFrame implements ActionListener {
+
+    Ljudspelare ljud = new Ljudspelare();
 
     JFrame jf = new JFrame("15-Spel");
 
@@ -17,7 +21,7 @@ public class Spel extends JFrame implements ActionListener {
 
 
     public Spel() {
-
+        jb1.addActionListener(this);
         jf.add(gameGrid());
         jf.pack();
         jf.setVisible(true);
@@ -41,6 +45,8 @@ public class Spel extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == jb1) {
+            ljud.playSound();
+        }
     }
 }
