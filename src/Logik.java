@@ -1,6 +1,9 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Logik {
+public class Logik implements ActionListener {
 
 
     boolean isNextToEmpty(int row, int col) {
@@ -21,20 +24,17 @@ public class Logik {
 
 
     //Hittar 0an i en array
-    void findEmptySpace(int[][] arrayToSearch) {
+    void findEmptySpace(JButton[][] arrayToSearch) {
 
         for (int i = arrayToSearch.length - 1; i >= 0; i--) {
             for (int j = arrayToSearch[i].length - 1; j >= 0; j--) {
-
-                if (arrayToSearch[i][j] == 0) {
+                if (arrayToSearch[i][j].getName().equals("Button0")) {
                     System.out.println("Hittat 0'an på arrayplats " + i + " " + j);
                 }
-
             }
         }
     }
 
-    //Array
     public int[][] gameGridArray = {
             {1, 2, 3, 4,},
             {5, 6, 7, 8,},
@@ -59,7 +59,10 @@ public class Logik {
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
+    }
 
 
     //Metod som kollar om nuvarande bräde matchar lösningen.
