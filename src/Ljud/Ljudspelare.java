@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class Ljudspelare {
-    public void playSound() {
+    public void playBlockSound() {
         try {
             File audioFile = new File("Sound/BlockSound.wav");
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
