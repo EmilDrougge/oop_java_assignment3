@@ -52,63 +52,7 @@ public class Spel extends JFrame implements ActionListener {
         return gameGridButtons;
     }
 
-    /*
-    JPanel gameGridCenter() {
-        centerPanel.setLayout(new GridLayout(4, 4));
-        centerPanel.setPreferredSize(new Dimension(400, 400));
 
-        JButton[] buttons = new JButton[16];
-        Font buttonFont = new Font("", Font.PLAIN, 50);
-
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton();
-            buttons[i].setFont(buttonFont);
-            buttons[i].setName("gameGridCenter" + i);
-
-            if(i >= 1 && i <= 15) {
-                buttons[i].setText(String.valueOf(i));
-            }
-            buttons[i].addActionListener(this);
-            centerPanel.add(buttons[i]);
-        }
-        return centerPanel;
-    }
-    */
-       /*
-        centerPanel.add(jb0);
-        centerPanel.add(jb1);
-        jb1.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb2);
-        jb2.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb3);
-        jb3.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb4);
-        jb4.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb5);
-        jb5.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb6);
-        jb6.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb7);
-        jb7.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb8);
-        jb8.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb9);
-        jb9.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb10);
-        jb10.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb11);
-        jb11.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb12);
-        jb12.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb13);
-        jb13.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb14);
-        jb14.setFont(new Font("", Font.PLAIN, 50));
-        centerPanel.add(jb15);
-        jb15.setFont(new Font("", Font.PLAIN, 50));
-
-        return centerPanel;
-    } */
 
     JPanel gameGridNorth() {
         banner.setPreferredSize(new Dimension(200, 50));
@@ -135,7 +79,11 @@ public class Spel extends JFrame implements ActionListener {
             ljud.playBlockSound();
         }
         if (e.getSource() == newGame) {
-            //ljud.
+            ljud.playStartGameSound();
+            centerPanel.removeAll();
+            logik.randomizeArray(logik.gameGridArray);
+            buttons = gameGridButtonArray(logik.gameGridArray);
+            centerPanel.validate();
         }
     }
 }
