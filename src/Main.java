@@ -3,5 +3,16 @@
 public class Main {
     public static void main(String[] args) {
         Spel start = new Spel();
+        Logik logik = new Logik();
+
+        int[][] array = logik.gameGridArray;
+        logik.randomizeArray(array);
+
+        for (int[] row : array) {
+            for (int value : row) {
+                System.out.println(value + " ");
+            }
+            System.out.println();
+        }
     }
 }

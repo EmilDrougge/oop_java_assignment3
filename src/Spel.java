@@ -21,13 +21,11 @@ public class Spel extends JFrame implements ActionListener {
 
 
     public Spel() {
-        jb1.addActionListener(this);
         jf.add(gameGrid());
         jf.pack();
         jf.setVisible(true);
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
     }
 
 
@@ -40,6 +38,7 @@ public class Spel extends JFrame implements ActionListener {
         jp.add(jb4);
         jp.add(jb5);
         jp.add(jb6);
+        jb1.addActionListener(this);
         return jp;
     }
 
