@@ -41,7 +41,6 @@ public class Spel extends JFrame implements ActionListener {
         jf.setVisible(true);
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
     }
 
 
