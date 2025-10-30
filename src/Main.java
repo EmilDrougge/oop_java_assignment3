@@ -16,7 +16,6 @@ public class Main {
             System.out.println("─".repeat(array[0].length * 4 + 1));
         }
 
-        logik.findEmptySpace(array);
 
 
     }

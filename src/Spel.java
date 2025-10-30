@@ -9,43 +9,50 @@ import java.awt.event.ActionListener;
 public class Spel extends JFrame implements ActionListener {
 
     Ljudspelare ljud = new Ljudspelare();
+    Logik logik = new Logik();
 
     JFrame jf = new JFrame("15-Spel");
 
-    /* JButton jb0 = new JButton();
-    JButton jb1 = new JButton("1");
-    JButton jb2 = new JButton("2");
-    JButton jb3 = new JButton("3");
-    JButton jb4 = new JButton("4");
-    JButton jb5 = new JButton("5");
-    JButton jb6 = new JButton("6");
-    JButton jb7 = new JButton("7");
-    JButton jb8 = new JButton("8");
-    JButton jb9 = new JButton("9");
-    JButton jb10 = new JButton("10");
-    JButton jb11 = new JButton("11");
-    JButton jb12 = new JButton("12");
-    JButton jb13 = new JButton("13");
-    JButton jb14 = new JButton("14");
-    JButton jb15 = new JButton("15"); */
     JButton newGame = new JButton("NEW GAME");
     JPanel southPanel = new JPanel();
-    JPanel centerPanel = new JPanel();
+    JPanel centerPanel = new JPanel(new GridLayout(4, 4));
     JPanel northPanel = new JPanel();
     JLabel banner = new JLabel("PLACEHOLDER");
-
+    JButton[][] buttons;
 
     public Spel() {
+        buttons = gameGridButtonArray(logik.gameGridArray);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
-        jf.add(gameGridCenter(), BorderLayout.CENTER);
+        jf.add(centerPanel, BorderLayout.CENTER);
         jf.add(gameGridSouth(), BorderLayout.SOUTH);
+        centerPanel.setLayout(new GridLayout(4, 4));
+        centerPanel.setPreferredSize(new Dimension(400, 400));
         jf.pack();
         jf.setVisible(true);
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
+        JButton[][] gameGridButtons = new JButton[4][4];
+        Font buttonFont = new Font("", Font.PLAIN, 50);
+        for (int i = 0; i < intArrayToButtons.length; i++) {
+            for (int j = 0; j < intArrayToButtons.length; j++) {
+                gameGridButtons[i][j] = new JButton();
+                if (intArrayToButtons[i][j] != 0) {
+                    gameGridButtons[i][j] = new JButton(String.valueOf(intArrayToButtons[i][j]));
+                }
+                gameGridButtons[i][j].setName("Button" + intArrayToButtons[i][j]);
+                gameGridButtons[i][j].addActionListener(this);
+                gameGridButtons[i][j].setFont(buttonFont);
+                centerPanel.add(gameGridButtons[i][j]);
+            }
+        }
+        logik.findEmptySpace(gameGridButtons);
+        return gameGridButtons;
+    }
 
+    /*
     JPanel gameGridCenter() {
         centerPanel.setLayout(new GridLayout(4, 4));
         centerPanel.setPreferredSize(new Dimension(400, 400));
@@ -56,17 +63,17 @@ public class Spel extends JFrame implements ActionListener {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton();
             buttons[i].setFont(buttonFont);
-            buttons[i].setName("gameGridCenter");
+            buttons[i].setName("gameGridCenter" + i);
 
             if(i >= 1 && i <= 15) {
                 buttons[i].setText(String.valueOf(i));
             }
             buttons[i].addActionListener(this);
             centerPanel.add(buttons[i]);
-
         }
         return centerPanel;
     }
+    */
        /*
         centerPanel.add(jb0);
         centerPanel.add(jb1);
