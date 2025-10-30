@@ -12,7 +12,7 @@ public class Spel extends JFrame implements ActionListener {
 
     JFrame jf = new JFrame("15-Spel");
 
-    JButton jb0 = new JButton();
+    /* JButton jb0 = new JButton();
     JButton jb1 = new JButton("1");
     JButton jb2 = new JButton("2");
     JButton jb3 = new JButton("3");
@@ -27,7 +27,7 @@ public class Spel extends JFrame implements ActionListener {
     JButton jb12 = new JButton("12");
     JButton jb13 = new JButton("13");
     JButton jb14 = new JButton("14");
-    JButton jb15 = new JButton("15");
+    JButton jb15 = new JButton("15"); */
     JButton newGame = new JButton("NEW GAME");
     JPanel southPanel = new JPanel();
     JPanel centerPanel = new JPanel();

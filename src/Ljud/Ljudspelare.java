@@ -17,4 +17,44 @@ public class Ljudspelare {
             ex.printStackTrace();
         }
     }
+
+    public void playSwingSound() {
+        try {
+            File audioFile = new File("Sound/Swish.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void playStartGameSound() {
+        try {
+            File audioFile = new File("Sound/StartGame.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void playWinningSound() {
+        try {
+            File audioFile = new File("Sound/WinningSound.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
+
+
+// https://uppbeat.io/sfx - Royalty free sound effects
