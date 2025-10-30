@@ -8,11 +8,16 @@ public class Main {
         int[][] array = logik.gameGridArray;
         logik.randomizeArray(array);
 
-        for (int[] row : array) {
-            for (int value : row) {
-                System.out.println(value + " ");
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.printf("| %2d ", array[i][j]);
             }
-            System.out.println();
+            System.out.println("|");
+            System.out.println("─".repeat(array[0].length * 4 + 1));
         }
+
+        logik.findEmptySpace(array);
+
+
     }
 }
