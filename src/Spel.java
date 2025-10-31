@@ -53,7 +53,6 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-
     JPanel gameGridNorth() {
         banner.setPreferredSize(new Dimension(200, 50));
         northPanel.setLayout(new FlowLayout());
@@ -70,20 +69,23 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton) e.getSource();
 
-        if ("gameGridCenter".equals(clickedButton.getName())) {
-            ljud.playBlockSound();
-        }
+
         if (e.getSource() == newGame) {
             ljud.playStartGameSound();
             centerPanel.removeAll();
             logik.randomizeArray(logik.gameGridArray);
             buttons = gameGridButtonArray(logik.gameGridArray);
             centerPanel.validate();
+        } else {
+            JButton clickedButton = (JButton) e.getSource();
+
+            if (clickedButton.getName().contains("Button")) {
+                ljud.playBlockSound();
+
+            }
         }
     }
 }

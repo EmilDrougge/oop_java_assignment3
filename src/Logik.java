@@ -6,7 +6,12 @@ import java.util.Random;
 public class Logik implements ActionListener {
 
 
-    boolean isNextToEmpty(int row, int col) {
+    boolean isNextToEmpty(JButton[][] grid, int row, int col) {
+        int[] emptyPosition = findEmptySpace(grid);
+        if (emptyPosition == null) return false;
+
+        int emptyRow = emptyPosition[0];
+        int emptyCol = emptyPosition[1];
 
         return true;
     }
@@ -14,7 +19,31 @@ public class Logik implements ActionListener {
     /*
     Kolla om knappen man klickar på är bredvid 0an
      */
+    void switchButtons(JButton[][] grid, int row, int col, int[][] intArray) {
+        int[] emptyPosition = findEmptySpace(grid);
+        if (emptyPosition == null) return;
 
+        int emptyRow = emptyPosition[0];
+        int emptyCol = emptyPosition[1];
+
+        /* JButton temporary = grid[row][col];
+        grid[row][col] = grid[emptyRow][emptyCol];
+        grid[emptyRow][emptyCol] = temporary; */
+
+        int temporary = intArray[row][col];
+        intArray[row][col] = intArray[emptyRow][emptyCol];
+        intArray[emptyRow][emptyCol] = temporary;
+
+        String temporaryText = grid[row][col].getText();
+        String temporaryName = grid[row][col].getName();
+
+        grid[row][col].setText(grid[emptyRow][emptyCol].getText());
+        grid[row][col].setName(grid[emptyRow][emptyCol].getName());
+
+        grid[emptyRow][emptyCol].setText(temporaryText);
+        grid[emptyRow][emptyCol].setName(temporaryName);
+
+    }
 
     //Metod för att flytta knapp om det går.
     /*
@@ -23,8 +52,20 @@ public class Logik implements ActionListener {
      */
 
 
+
+    int[] findEmptySpace(JButton[][] arrayToSearch) {
+        for (int i = 0; i < arrayToSearch.length; i++) {
+            for (int j = 0; j < arrayToSearch[i].length; j++) {
+                if (arrayToSearch[i][j].getName().equals("Button0")) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null; // Failsafe
+    }
+
     //Hittar 0an i en array
-    void findEmptySpace(JButton[][] arrayToSearch) {
+    /* void findEmptySpace(JButton[][] arrayToSearch) {
 
         for (int i = arrayToSearch.length - 1; i >= 0; i--) {
             for (int j = arrayToSearch[i].length - 1; j >= 0; j--) {
@@ -33,7 +74,7 @@ public class Logik implements ActionListener {
                 }
             }
         }
-    }
+    }*/
 
     public int[][] gameGridArray = {
             {1, 2, 3, 4,},
