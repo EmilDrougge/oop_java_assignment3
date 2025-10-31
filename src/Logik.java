@@ -1,9 +1,7 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Logik implements ActionListener {
+public class Logik {
 
 
     boolean isNextToEmpty(JButton[][] grid, int row, int col) {
@@ -13,12 +11,14 @@ public class Logik implements ActionListener {
         int emptyRow = emptyPosition[0];
         int emptyCol = emptyPosition[1];
 
-        return true;
+        boolean sameRow = (row == emptyRow) && (Math.abs(col - emptyCol) == 1);
+        boolean sameCol = (col == emptyCol) && (Math.abs(row - emptyRow) == 1);
+
+        return sameRow || sameCol;
     }
-    //Metod för att kolla om knappen kan flytta på sig.
-    /*
-    Kolla om knappen man klickar på är bredvid 0an
-     */
+
+
+
     void switchButtons(JButton[][] grid, int row, int col, int[][] intArray) {
         int[] emptyPosition = findEmptySpace(grid);
         if (emptyPosition == null) return;
@@ -26,7 +26,7 @@ public class Logik implements ActionListener {
         int emptyRow = emptyPosition[0];
         int emptyCol = emptyPosition[1];
 
-        /* JButton temporary = grid[row][col];
+         /* JButton temporary = grid[row][col];
         grid[row][col] = grid[emptyRow][emptyCol];
         grid[emptyRow][emptyCol] = temporary; */
 
@@ -44,12 +44,6 @@ public class Logik implements ActionListener {
         grid[emptyRow][emptyCol].setName(temporaryName);
 
     }
-
-    //Metod för att flytta knapp om det går.
-    /*
-    Om metoden som kollar om knappen är bredvid 0an så kan knappen flytta på sig.
-    Då ska denna metod flippa deras plats i arrayen.
-     */
 
 
 
@@ -100,10 +94,23 @@ public class Logik implements ActionListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    boolean winLayout(int[][] currentGrid) {
+        int expected = 1;
 
+        for (int i = 0; i < currentGrid.length; i++) {
+            for (int j = 0; j < currentGrid[i].length; j++) {
+                if (i == currentGrid.length - 1 && j == currentGrid[i].length - 1) {
+                    return currentGrid[i][j] == 0;
+                }
+                if (currentGrid[i][j] != expected) {
+                    return false;
+                }
+                expected++;
+            }
+        }
+        return true;
     }
+
 
 
     //Metod som kollar om nuvarande bräde matchar lösningen.
