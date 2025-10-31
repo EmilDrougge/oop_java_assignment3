@@ -20,6 +20,8 @@ public class Spel extends JFrame implements ActionListener {
     JLabel banner = new JLabel("PLACEHOLDER");
     JButton[][] buttons;
 
+
+
     public Spel() {
         buttons = gameGridButtonArray(logik.gameGridArray);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
@@ -32,6 +34,7 @@ public class Spel extends JFrame implements ActionListener {
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+
 
     public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
         JButton[][] gameGridButtons = new JButton[4][4];
@@ -84,7 +87,19 @@ public class Spel extends JFrame implements ActionListener {
 
             if (clickedButton.getName().contains("Button")) {
                 ljud.playBlockSound();
-
+                for (int i = 0; i < buttons.length; i++) {
+                    for (int j = 0; j < buttons[i].length; j++) {
+                        if (buttons[i][j] == clickedButton) {
+                            if (logik.isNextToEmpty(buttons, i, j)) {
+                                logik.switchButtons(buttons, i, j, logik.gameGridArray);
+                                if (logik.winLayout(logik.gameGridArray)) {
+                                    System.out.println("Vinst!");
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
             }
         }
     }
