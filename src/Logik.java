@@ -3,8 +3,7 @@ import java.util.Random;
 
 public class Logik {
 
-
-    boolean isNextToEmpty(JButton[][] grid, int row, int col) {
+    public boolean isNextToEmpty(JButton[][] grid, int row, int col) {
         int[] emptyPosition = findEmptySpace(grid);
         if (emptyPosition == null) return false;
 
@@ -17,9 +16,7 @@ public class Logik {
         return sameRow || sameCol;
     }
 
-
-
-    void switchButtons(JButton[][] grid, int row, int col, int[][] intArray) {
+    public void switchButtons(JButton[][] grid, int row, int col, int[][] intArray) {
         int[] emptyPosition = findEmptySpace(grid);
         if (emptyPosition == null) return;
 
@@ -45,9 +42,7 @@ public class Logik {
 
     }
 
-
-
-    int[] findEmptySpace(JButton[][] arrayToSearch) {
+    public int[] findEmptySpace(JButton[][] arrayToSearch) {
         for (int i = 0; i < arrayToSearch.length; i++) {
             for (int j = 0; j < arrayToSearch[i].length; j++) {
                 if (arrayToSearch[i][j].getName().equals("Button0")) {
@@ -58,18 +53,6 @@ public class Logik {
         return null; // Failsafe
     }
 
-    //Hittar 0an i en array
-    /* void findEmptySpace(JButton[][] arrayToSearch) {
-
-        for (int i = arrayToSearch.length - 1; i >= 0; i--) {
-            for (int j = arrayToSearch[i].length - 1; j >= 0; j--) {
-                if (arrayToSearch[i][j].getName().equals("Button0")) {
-                    System.out.println("Hittat 0'an på arrayplats " + i + " " + j);
-                }
-            }
-        }
-    }*/
-
     public int[][] gameGridArray = {
             {1, 2, 3, 4,},
             {5, 6, 7, 8,},
@@ -78,7 +61,7 @@ public class Logik {
     };
 
     //Tar array och kastar om
-    void randomizeArray(int[][] arrayToRandomize) {
+    public void randomizeArray(int[][] arrayToRandomize) {
         Random rand = new Random();
 
         for (int i = arrayToRandomize.length - 1; i > 0; i--) {
@@ -94,7 +77,7 @@ public class Logik {
         }
     }
 
-    boolean winLayout(int[][] currentGrid) {
+    public boolean winLayout(int[][] currentGrid) {
         int expected = 1;
 
         for (int i = 0; i < currentGrid.length; i++) {
@@ -110,10 +93,4 @@ public class Logik {
         }
         return true;
     }
-
-
-
-    //Metod som kollar om nuvarande bräde matchar lösningen.
-    //Spara en array som är rätt och jämför efter varje flytt kanske?
-
 }

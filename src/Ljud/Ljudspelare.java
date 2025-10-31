@@ -3,9 +3,11 @@ package Ljud;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Ljudspelare {
+
     public void playBlockSound() {
         try {
             File audioFile = new File("Sound/BlockSound.wav");
@@ -25,6 +27,8 @@ public class Ljudspelare {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
+            FloatControl sound = (FloatControl) clip.getControl((FloatControl.Type.MASTER_GAIN));
+            sound.setValue(sound.getValue() - 15.0f);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -49,6 +53,8 @@ public class Ljudspelare {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
+            FloatControl sound = (FloatControl) clip.getControl((FloatControl.Type.MASTER_GAIN));
+            sound.setValue(sound.getValue() - 15.0f);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

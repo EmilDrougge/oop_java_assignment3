@@ -1,6 +1,4 @@
 import Ljud.Ljudspelare;
-
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,10 +15,8 @@ public class Spel extends JFrame implements ActionListener {
     JPanel southPanel = new JPanel();
     JPanel centerPanel = new JPanel(new GridLayout(4, 4));
     JPanel northPanel = new JPanel();
-    JLabel banner = new JLabel("PLACEHOLDER");
+    JLabel banner = new JLabel(" \uD835\uDC39\uD835\uDC52\uD835\uDCC2\uD835\uDCC9\uD835\uDC5C\uD835\uDCC3\uD835\uDCC8\uD835\uDCC5\uD835\uDC52\uD835\uDCC1");
     JButton[][] buttons;
-
-
 
     public Spel() {
         buttons = gameGridButtonArray(logik.gameGridArray);
@@ -59,8 +55,9 @@ public class Spel extends JFrame implements ActionListener {
 
 
 
-
     JPanel gameGridNorth() {
+        Font font = new Font("", Font.PLAIN, 30);
+        banner.setFont(font);
         banner.setPreferredSize(new Dimension(200, 50));
         northPanel.setLayout(new FlowLayout());
         northPanel.add(banner);
@@ -77,6 +74,13 @@ public class Spel extends JFrame implements ActionListener {
         return southPanel;
     }
 
+    JLabel victoryPanel() {
+        ImageIcon victoryPicture = new ImageIcon("Pictures/Congratulations.jpg");
+        JLabel victory = new JLabel();
+        victory.setIcon(victoryPicture);
+        victory.setSize(400, 400);
+       return victory;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -84,6 +88,8 @@ public class Spel extends JFrame implements ActionListener {
 
         if (e.getSource() == newGame) {
             ljud.playStartGameSound();
+            jf.remove(victoryPanel());
+            jf.add(centerPanel);
             centerPanel.removeAll();
             logik.randomizeArray(logik.gameGridArray);
             buttons = gameGridButtonArray(logik.gameGridArray);
@@ -100,9 +106,9 @@ public class Spel extends JFrame implements ActionListener {
                                 logik.switchButtons(buttons, i, j, logik.gameGridArray);
                                 ljud.playSwingSound();
                                 if (logik.winLayout(logik.gameGridArray)) {
-                                    // ta bort centralPanel
-                                    // spela vicory jul
-                                    // sätt in vinst bild
+                                    ljud.playWinningSound();
+                                    jf.remove(centerPanel);
+                                    jf.add(victoryPanel(), BorderLayout.CENTER);
                                 }
                             }
                             return;
