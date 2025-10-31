@@ -36,6 +36,8 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
+
+
     public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
         JButton[][] gameGridButtons = new JButton[4][4];
         Font buttonFont = new Font("", Font.PLAIN, 50);
@@ -56,6 +58,8 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
+
+
     JPanel gameGridNorth() {
         banner.setPreferredSize(new Dimension(200, 50));
         northPanel.setLayout(new FlowLayout());
@@ -63,6 +67,8 @@ public class Spel extends JFrame implements ActionListener {
         return northPanel;
     }
 
+
+    
     JPanel gameGridSouth() {
         newGame.setPreferredSize(new Dimension(200, 50));
         southPanel.setLayout(new FlowLayout());
@@ -92,8 +98,11 @@ public class Spel extends JFrame implements ActionListener {
                         if (buttons[i][j] == clickedButton) {
                             if (logik.isNextToEmpty(buttons, i, j)) {
                                 logik.switchButtons(buttons, i, j, logik.gameGridArray);
+                                ljud.playSwingSound();
                                 if (logik.winLayout(logik.gameGridArray)) {
-                                    System.out.println("Vinst!");
+                                    // ta bort centralPanel
+                                    // spela vicory jul
+                                    // sätt in vinst bild
                                 }
                             }
                             return;
