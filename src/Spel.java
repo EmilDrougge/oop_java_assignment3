@@ -76,6 +76,7 @@ public class Spel extends JFrame implements ActionListener {
 
     JLabel victoryPanel() {
         ImageIcon victoryPicture = new ImageIcon("Pictures/Congratulations.jpg");
+        //https://www.freepik.com/ royalty free picture
         JLabel victory = new JLabel();
         victory.setIcon(victoryPicture);
         victory.setSize(400, 400);
