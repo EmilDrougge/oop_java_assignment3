@@ -18,7 +18,7 @@ public class Spel extends JFrame implements ActionListener {
     JLabel victoryLabel = victoryPanel();
     Timer timer;
     JLabel timeLabel;
-    int secounds = 0;
+    int seconds = 0;
 
     public Spel() {
 
@@ -91,59 +91,88 @@ public class Spel extends JFrame implements ActionListener {
 
         if (timer == null) {
             timer = new Timer(1000, e -> {
-                secounds++;
-                timeLabel.setText("Time : " + secounds);
+                seconds++;
+                timeLabel.setText("Time : " + seconds);
             });
         }
         return timeLabel;
     }
 
+
+    private void handleNewGame() {
+        timer.restart();
+        seconds = 0;
+        ljud.playStartGameSound();
+
+        jf.remove(victoryLabel);
+        centerPanel.removeAll();
+
+        logik.randomizeArray(logik.gameGridArray);
+        buttons = gameGridButtonArray(logik.gameGridArray);
+
+        jf.add(centerPanel, BorderLayout.CENTER);
+        refreshUI();
+    }
+
+
+    private void handleButtonClick(ActionEvent e) {
+        JButton clickedButton = (JButton) e.getSource();
+
+        if (!clickedButton.getName().contains("Button")) {
+            return;
+        }
+
+        ljud.playBlockSound();
+
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                if (buttons[i][j] == clickedButton) {
+                    processButtonMove(i, j);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    private void processButtonMove(int i, int j) {
+        if (logik.isNextToEmpty(buttons, i, j)) {
+            logik.switchButtons(buttons, i, j, logik.gameGridArray);
+            ljud.playSwingSound();
+
+            if (logik.winLayout(logik.gameGridArray)) {
+                handleVictory();
+            }
+        }
+    }
+
+
+    private void handleVictory() {
+        ljud.playWinningSound();
+        timer.stop();
+
+        jf.remove(centerPanel);
+        jf.add(victoryLabel, BorderLayout.CENTER);
+        refreshUI();
+    }
+
+
+    private void refreshUI() {
+        centerPanel.revalidate();
+        centerPanel.repaint();
+        jf.revalidate();
+        jf.repaint();
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == newGame) {
-            timer.restart();
-            secounds = 0;
-            ljud.playStartGameSound();
-
-            jf.remove(victoryLabel);
-
-            centerPanel.removeAll();
-            logik.randomizeArray(logik.gameGridArray);
-            buttons = gameGridButtonArray(logik.gameGridArray);
-
-            jf.add(centerPanel, BorderLayout.CENTER);
-            centerPanel.revalidate();
-            centerPanel.repaint();
-            jf.revalidate();
-            jf.repaint();
-
+            handleNewGame();
         } else {
-            JButton clickedButton = (JButton) e.getSource();
-
-            if (clickedButton.getName().contains("Button")) {
-                ljud.playBlockSound();
-
-                for (int i = 0; i < buttons.length; i++) {
-                    for (int j = 0; j < buttons[i].length; j++) {
-                        if (buttons[i][j] == clickedButton) {
-                            if (logik.isNextToEmpty(buttons, i, j)) {
-                                logik.switchButtons(buttons, i, j, logik.gameGridArray);
-                                ljud.playSwingSound();
-                                if (logik.winLayout(logik.gameGridArray)) {
-                                    ljud.playWinningSound();
-                                    jf.remove(centerPanel);
-                                    timer.stop();
-                                    jf.add(victoryLabel, BorderLayout.CENTER);
-                                    jf.revalidate();
-                                    jf.repaint();
-                                }
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
+            handleButtonClick(e);
         }
+
     }
 }
