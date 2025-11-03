@@ -8,18 +8,22 @@ public class Spel extends JFrame implements ActionListener {
 
     Ljudspelare ljud = new Ljudspelare();
     Logik logik = new Logik();
-
     JFrame jf = new JFrame("15-Spel");
-
     JButton newGame = new JButton("NEW GAME");
     JPanel southPanel = new JPanel();
     JPanel centerPanel = new JPanel(new GridLayout(4, 4));
     JPanel northPanel = new JPanel();
     JLabel banner = new JLabel(" \uD835\uDC39\uD835\uDC52\uD835\uDCC2\uD835\uDCC9\uD835\uDC5C\uD835\uDCC3\uD835\uDCC8\uD835\uDCC5\uD835\uDC52\uD835\uDCC1");
     JButton[][] buttons;
+    JLabel victoryLabel = victoryPanel();
+    Timer timer;
+    JLabel timeLabel;
+    int secounds = 0;
 
     public Spel() {
+
         buttons = gameGridButtonArray(logik.gameGridArray);
+        jf.add(timerPanel(), BorderLayout.WEST);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
         jf.add(centerPanel, BorderLayout.CENTER);
         jf.add(gameGridSouth(), BorderLayout.SOUTH);
@@ -29,10 +33,8 @@ public class Spel extends JFrame implements ActionListener {
         jf.setVisible(true);
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        timer.start();
     }
-
-
-
 
     public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
         JButton[][] gameGridButtons = new JButton[4][4];
@@ -53,8 +55,6 @@ public class Spel extends JFrame implements ActionListener {
         return gameGridButtons;
     }
 
-
-
     JPanel gameGridNorth() {
         Font font = new Font("", Font.PLAIN, 30);
         banner.setFont(font);
@@ -64,8 +64,6 @@ public class Spel extends JFrame implements ActionListener {
         return northPanel;
     }
 
-
-    
     JPanel gameGridSouth() {
         newGame.setPreferredSize(new Dimension(200, 50));
         southPanel.setLayout(new FlowLayout());
@@ -75,31 +73,60 @@ public class Spel extends JFrame implements ActionListener {
     }
 
     JLabel victoryPanel() {
+
         ImageIcon victoryPicture = new ImageIcon("Pictures/Congratulations.jpg");
         //https://www.freepik.com/ royalty free picture
-        JLabel victory = new JLabel();
-        victory.setIcon(victoryPicture);
-        victory.setSize(400, 400);
-       return victory;
+        JLabel victoryLabel = new JLabel();
+        victoryLabel.setIcon(victoryPicture);
+        victoryLabel.setSize(400, 400);
+
+       return victoryLabel;
+    }
+
+    JLabel timerPanel() {
+        if (timeLabel == null) {
+            timeLabel = new JLabel("Time : 0");
+            timeLabel.setFont(new Font("Arial", Font.BOLD, 20 ));
+        }
+
+        if (timer == null) {
+            timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    secounds++;
+                    timeLabel.setText("Time : " + secounds);
+                }
+            });
+        }
+        return timeLabel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-
         if (e.getSource() == newGame) {
+            timer.restart();
+            secounds = 0;
             ljud.playStartGameSound();
-            jf.remove(victoryPanel());
-            jf.add(centerPanel);
+
+            jf.remove(victoryLabel);
+
             centerPanel.removeAll();
             logik.randomizeArray(logik.gameGridArray);
             buttons = gameGridButtonArray(logik.gameGridArray);
-            centerPanel.validate();
+
+            jf.add(centerPanel, BorderLayout.CENTER);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+            jf.revalidate();
+            jf.repaint();
+
         } else {
             JButton clickedButton = (JButton) e.getSource();
 
             if (clickedButton.getName().contains("Button")) {
                 ljud.playBlockSound();
+
                 for (int i = 0; i < buttons.length; i++) {
                     for (int j = 0; j < buttons[i].length; j++) {
                         if (buttons[i][j] == clickedButton) {
@@ -109,7 +136,10 @@ public class Spel extends JFrame implements ActionListener {
                                 if (logik.winLayout(logik.gameGridArray)) {
                                     ljud.playWinningSound();
                                     jf.remove(centerPanel);
-                                    jf.add(victoryPanel(), BorderLayout.CENTER);
+                                    timer.stop();
+                                    jf.add(victoryLabel, BorderLayout.CENTER);
+                                    jf.revalidate();
+                                    jf.repaint();
                                 }
                             }
                             return;
