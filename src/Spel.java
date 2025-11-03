@@ -21,6 +21,7 @@ public class Spel extends JFrame implements ActionListener {
     int secounds = 0;
 
     public Spel() {
+
         buttons = gameGridButtonArray(logik.gameGridArray);
         jf.add(timerPanel(), BorderLayout.WEST);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
