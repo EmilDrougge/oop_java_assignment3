@@ -20,6 +20,7 @@ public class Ljudspelare {
         }
     }
 
+
     public void playSwingSound() {
         try {
             File audioFile = new File("Sound/Swish.wav");
@@ -34,6 +35,7 @@ public class Ljudspelare {
         }
     }
 
+
     public void playStartGameSound() {
         try {
             File audioFile = new File("Sound/StartGame.wav");
@@ -47,6 +49,7 @@ public class Ljudspelare {
             ex.printStackTrace();
         }
     }
+
 
     public void playWinningSound() {
         try {

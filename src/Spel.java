@@ -17,13 +17,15 @@ public class Spel extends JFrame implements ActionListener {
     JButton[][] buttons;
     JLabel victoryLabel = victoryPanel();
     Timer timer;
-    JLabel timeLabel;
+    JLabel timeTextField;
+    JLabel time = new JLabel("Time");
     int seconds = 0;
+
 
     public Spel() {
 
         buttons = gameGridButtonArray(logik.gameGridArray);
-        jf.add(timerPanel(), BorderLayout.WEST);
+        jf.add(gameGridWest(), BorderLayout.WEST);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
         jf.add(centerPanel, BorderLayout.CENTER);
         jf.add(gameGridSouth(), BorderLayout.SOUTH);
@@ -35,6 +37,7 @@ public class Spel extends JFrame implements ActionListener {
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
         timer.start();
     }
+
 
     public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
         JButton[][] gameGridButtons = new JButton[4][4];
@@ -55,6 +58,19 @@ public class Spel extends JFrame implements ActionListener {
         return gameGridButtons;
     }
 
+
+    JPanel gameGridWest() {
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new GridLayout(16, 1));
+        Font font = new Font("Arial", Font.PLAIN, 30);
+        time.setFont(font);
+        westPanel.setPreferredSize(new Dimension(75, 100));
+        westPanel.add(time);
+        westPanel.add(timerPanel());
+        return westPanel;
+    }
+
+
     JPanel gameGridNorth() {
         Font font = new Font("", Font.PLAIN, 30);
         banner.setFont(font);
@@ -64,6 +80,7 @@ public class Spel extends JFrame implements ActionListener {
         return northPanel;
     }
 
+
     JPanel gameGridSouth() {
         newGame.setPreferredSize(new Dimension(200, 50));
         southPanel.setLayout(new FlowLayout());
@@ -71,6 +88,7 @@ public class Spel extends JFrame implements ActionListener {
         newGame.addActionListener(this);
         return southPanel;
     }
+
 
     JLabel victoryPanel() {
 
@@ -83,23 +101,24 @@ public class Spel extends JFrame implements ActionListener {
        return victoryLabel;
     }
 
+
     JLabel timerPanel() {
-        if (timeLabel == null) {
-            timeLabel = new JLabel("Time : 0");
-            timeLabel.setFont(new Font("Arial", Font.BOLD, 20 ));
+        if (timeTextField == null) {
+            timeTextField = new JLabel("0");
+            timeTextField.setFont(new Font("Arial", Font.BOLD, 25 ));
         }
 
         if (timer == null) {
             timer = new Timer(1000, e -> {
                 seconds++;
-                timeLabel.setText("Time : " + seconds);
+                timeTextField.setText(String.valueOf(seconds));
             });
         }
-        return timeLabel;
+        return timeTextField;
     }
 
 
-    private void handleNewGame() {
+    public void handleNewGame() {
         timer.restart();
         seconds = 0;
         ljud.playStartGameSound();
@@ -115,7 +134,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void handleButtonClick(ActionEvent e) {
+    public void handleButtonClick(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
 
         if (!clickedButton.getName().contains("Button")) {
@@ -135,7 +154,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void processButtonMove(int i, int j) {
+    public void processButtonMove(int i, int j) {
         if (logik.isNextToEmpty(buttons, i, j)) {
             logik.switchButtons(buttons, i, j, logik.gameGridArray);
             ljud.playSwingSound();
@@ -147,7 +166,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void handleVictory() {
+    public void handleVictory() {
         ljud.playWinningSound();
         timer.stop();
 
@@ -157,7 +176,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void refreshUI() {
+    public void refreshUI() {
         centerPanel.revalidate();
         centerPanel.repaint();
         jf.revalidate();
