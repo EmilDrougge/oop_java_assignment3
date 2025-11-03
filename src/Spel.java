@@ -90,12 +90,9 @@ public class Spel extends JFrame implements ActionListener {
         }
 
         if (timer == null) {
-            timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    secounds++;
-                    timeLabel.setText("Time : " + secounds);
-                }
+            timer = new Timer(1000, e -> {
+                secounds++;
+                timeLabel.setText("Time : " + secounds);
             });
         }
         return timeLabel;

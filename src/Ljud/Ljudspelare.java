@@ -41,6 +41,8 @@ public class Ljudspelare {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
+            FloatControl sound = (FloatControl) clip.getControl((FloatControl.Type.MASTER_GAIN));
+            sound.setValue(sound.getValue() - 15.0f);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
