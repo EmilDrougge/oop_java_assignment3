@@ -20,6 +20,7 @@ public class Spel extends JFrame implements ActionListener {
     JLabel timeLabel;
     int seconds = 0;
 
+
     public Spel() {
 
         buttons = gameGridButtonArray(logik.gameGridArray);
@@ -35,6 +36,7 @@ public class Spel extends JFrame implements ActionListener {
         jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
         timer.start();
     }
+
 
     public JButton[][] gameGridButtonArray(int[][] intArrayToButtons) {
         JButton[][] gameGridButtons = new JButton[4][4];
@@ -55,6 +57,7 @@ public class Spel extends JFrame implements ActionListener {
         return gameGridButtons;
     }
 
+
     JPanel gameGridNorth() {
         Font font = new Font("", Font.PLAIN, 30);
         banner.setFont(font);
@@ -64,6 +67,7 @@ public class Spel extends JFrame implements ActionListener {
         return northPanel;
     }
 
+
     JPanel gameGridSouth() {
         newGame.setPreferredSize(new Dimension(200, 50));
         southPanel.setLayout(new FlowLayout());
@@ -71,6 +75,7 @@ public class Spel extends JFrame implements ActionListener {
         newGame.addActionListener(this);
         return southPanel;
     }
+
 
     JLabel victoryPanel() {
 
@@ -82,6 +87,7 @@ public class Spel extends JFrame implements ActionListener {
 
        return victoryLabel;
     }
+
 
     JLabel timerPanel() {
         if (timeLabel == null) {
@@ -99,7 +105,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void handleNewGame() {
+    public void handleNewGame() {
         timer.restart();
         seconds = 0;
         ljud.playStartGameSound();
@@ -115,7 +121,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void handleButtonClick(ActionEvent e) {
+    public void handleButtonClick(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
 
         if (!clickedButton.getName().contains("Button")) {
@@ -135,7 +141,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void processButtonMove(int i, int j) {
+    public void processButtonMove(int i, int j) {
         if (logik.isNextToEmpty(buttons, i, j)) {
             logik.switchButtons(buttons, i, j, logik.gameGridArray);
             ljud.playSwingSound();
@@ -147,7 +153,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void handleVictory() {
+    public void handleVictory() {
         ljud.playWinningSound();
         timer.stop();
 
@@ -157,7 +163,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    private void refreshUI() {
+    public void refreshUI() {
         centerPanel.revalidate();
         centerPanel.repaint();
         jf.revalidate();

@@ -3,6 +3,19 @@ import java.util.Random;
 
 public class Logik {
 
+
+    public int[] findEmptySpace(JButton[][] arrayToSearch) {
+        for (int i = 0; i < arrayToSearch.length; i++) {
+            for (int j = 0; j < arrayToSearch[i].length; j++) {
+                if (arrayToSearch[i][j].getName().equals("Button0")) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null; // Failsafe
+    }
+
+
     public boolean isNextToEmpty(JButton[][] grid, int row, int col) {
         int[] emptyPosition = findEmptySpace(grid);
         if (emptyPosition == null) return false;
@@ -16,6 +29,8 @@ public class Logik {
         return sameRow || sameCol;
     }
 
+
+
     public void switchButtons(JButton[][] grid, int row, int col, int[][] intArray) {
         int[] emptyPosition = findEmptySpace(grid);
         if (emptyPosition == null) return;
@@ -23,9 +38,6 @@ public class Logik {
         int emptyRow = emptyPosition[0];
         int emptyCol = emptyPosition[1];
 
-         /* JButton temporary = grid[row][col];
-        grid[row][col] = grid[emptyRow][emptyCol];
-        grid[emptyRow][emptyCol] = temporary; */
 
         int temporary = intArray[row][col];
         intArray[row][col] = intArray[emptyRow][emptyCol];
@@ -42,16 +54,7 @@ public class Logik {
 
     }
 
-    public int[] findEmptySpace(JButton[][] arrayToSearch) {
-        for (int i = 0; i < arrayToSearch.length; i++) {
-            for (int j = 0; j < arrayToSearch[i].length; j++) {
-                if (arrayToSearch[i][j].getName().equals("Button0")) {
-                    return new int[]{i, j};
-                }
-            }
-        }
-        return null; // Failsafe
-    }
+
 
     public int[][] gameGridArray = {
             {1, 2, 3, 4,},
@@ -59,6 +62,8 @@ public class Logik {
             {9, 10, 11, 12,},
             {13, 14, 15, 0}
     };
+
+
 
     //Tar array och kastar om
     public void randomizeArray(int[][] arrayToRandomize) {
@@ -76,6 +81,8 @@ public class Logik {
             }
         }
     }
+
+
 
     public boolean winLayout(int[][] currentGrid) {
         int expected = 1;
