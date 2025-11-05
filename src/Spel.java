@@ -8,6 +8,7 @@ public class Spel extends JFrame implements ActionListener {
 
     Ljudspelare ljud = new Ljudspelare();
     Logik logik = new Logik();
+
     JFrame jf = new JFrame("15-Spel");
     JButton newGame = new JButton("NEW GAME");
     JPanel southPanel = new JPanel();
@@ -17,18 +18,22 @@ public class Spel extends JFrame implements ActionListener {
     JButton[][] buttons;
     JLabel victoryLabel = victoryPanel();
     Timer timer;
-    JLabel timeTextField;
-    JLabel time = new JLabel("Time");
+    JLabel secondsLabel;
     int seconds = 0;
+    JPanel padding = new JPanel();
 
 
     public Spel() {
 
         buttons = gameGridButtonArray(logik.gameGridArray);
-        jf.add(gameGridWest(), BorderLayout.WEST);
+        jf.add(timerPanel(), BorderLayout.WEST);
         jf.add(gameGridNorth(), BorderLayout.NORTH);
         jf.add(centerPanel, BorderLayout.CENTER);
         jf.add(gameGridSouth(), BorderLayout.SOUTH);
+
+        padding.setPreferredSize(new Dimension(80, -1));
+        jf.add(padding, BorderLayout.EAST);
+
         centerPanel.setLayout(new GridLayout(4, 4));
         centerPanel.setPreferredSize(new Dimension(400, 400));
         jf.pack();
@@ -59,16 +64,7 @@ public class Spel extends JFrame implements ActionListener {
     }
 
 
-    JPanel gameGridWest() {
-        JPanel westPanel = new JPanel();
-        westPanel.setLayout(new GridLayout(16, 1));
-        Font font = new Font("Arial", Font.PLAIN, 30);
-        time.setFont(font);
-        westPanel.setPreferredSize(new Dimension(75, 100));
-        westPanel.add(time);
-        westPanel.add(timerPanel());
-        return westPanel;
-    }
+
 
 
     JPanel gameGridNorth() {
@@ -101,20 +97,35 @@ public class Spel extends JFrame implements ActionListener {
        return victoryLabel;
     }
 
+    //Skapa upp panelen med timern och stuff
+    JPanel timerPanel() {
+        JPanel westPanel = new JPanel(new BorderLayout());
 
-    JLabel timerPanel() {
-        if (timeTextField == null) {
-            timeTextField = new JLabel("0");
-            timeTextField.setFont(new Font("Arial", Font.BOLD, 25 ));
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new GridLayout(2, 1, 0, 5));
+
+        Font font = new Font("Arial", Font.PLAIN, 30);
+        JLabel timeLabel = new JLabel("Time");
+        timeLabel.setFont(font);
+        if (secondsLabel == null) {
+            secondsLabel = new JLabel("0");
+            secondsLabel.setFont(new Font("Arial", Font.BOLD, 25 ));
         }
 
         if (timer == null) {
             timer = new Timer(1000, e -> {
                 seconds++;
-                timeTextField.setText(String.valueOf(seconds));
+                secondsLabel.setText(String.valueOf(seconds));
             });
         }
-        return timeTextField;
+
+        innerPanel.add(timeLabel);
+        innerPanel.add(secondsLabel);
+
+        westPanel.add(innerPanel, BorderLayout.NORTH);
+        westPanel.setPreferredSize(new Dimension(80, -1));
+
+        return westPanel;
     }
 
 
